@@ -1,17 +1,15 @@
-import React, { Component , useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
-import AceEditor from "react-ace";
-import "ace-builds/src-noconflict/mode-javascript";
-import "ace-builds/src-noconflict/theme-monokai";
 import createElement from '../components/Elements';
 export default function MainScreen (){
   
   const [filedata,setfiledata] = useState({})
   const [Data,setData] = useState([])
+  const [filename,setfilename] = useState("")
 	function checkselect(e){
 		renderFile(e.name)
 	}
@@ -50,6 +48,7 @@ export default function MainScreen (){
         let jsn = JSON.parse(val)
         console.log(jsn["root"])
 				setfiledata(jsn)
+        setfilename(filepath)
 			})
 		})
   }
@@ -75,28 +74,18 @@ export default function MainScreen (){
 
               <div className='flex w-2/3 bg-blue-100 h-full justify-center items-center'>
               <div className='flex flex-col justify-around h-full'>
+                <div className='text-lg text-center font-bold'>
+                  {filename}
+                </div>
                 {
                   filedata["root"]?filedata["root"].map((element,idx) => {
                     return createUI(element)
                   }):null
                 }
+                <div className='flex justify-center'>
+                  <button className='border-solid border-2 border-black px-2 py-1 rounded-lg bg-blue-400' type='button'>Submit</button>
+                </div>
               </div>
-
-                {/* <AceEditor
-                placeholder=""
-                height='100vh'
-                width='100%'
-                theme="Agolawhite"
-                name="blah2"
-                fontSize={14}
-                showPrintMargin={false}
-                showGutter={true}
-                highlightActiveLine={true}
-                value={filedata}
-                setOptions={{
-                showLineNumbers: true,
-                tabSize: 2,
-                }}/> */}
                         
               </div>
           </div>
